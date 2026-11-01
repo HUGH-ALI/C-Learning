@@ -20,5 +20,6 @@
 
 ## 核心要点
 - `sizeof(arr)/sizeof(arr[0])`：自动计算数组元素个数
-- 循环条件优先使用 `left <= right`
+- 循环条件 `left <= right`
+- 当 `left>right`时二分结束就时找不到改值
 - 适合大量有序数据，时间复杂度 $O(\log_2n)$
