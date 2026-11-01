@@ -6,11 +6,11 @@ int main()
 	int a;
 	while(1)
 	{
-		printf("\nÒªÕÒµÄÊı:>");
+		printf("\nè¦æ‰¾çš„æ•°:>");
 		scanf("%d",&a);
 		int left = 0;
         int right = sizeof(arr)/sizeof(arr[0]) - 1;
-        int m;//Ã¿´Î²éÕÒleft,right,m¶¼Òª»Ö¸´³õÊ¼Öµ 
+        int m = (left + right)/2;//æ¯æ¬¡æŸ¥æ‰¾left,right,méƒ½è¦æ¢å¤åˆå§‹å€¼ 
         int flag=0;
 		if(a==0)break;
 			while(left<=right)
@@ -27,14 +27,14 @@ int main()
 			}
 			else
 			{
-				printf("%d µÄÏÂ±êÎª %d",a,m);
+				printf("%d çš„ä¸‹æ ‡ä¸º %d",a,m);
 				flag=1;
 				break;
 			}
 		}
 		if(flag==0)
 		{
-			printf("ÕÒ²»µ½");
+			printf("æ‰¾ä¸åˆ°");
 		}
 	}
 	
