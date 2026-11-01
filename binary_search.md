@@ -6,8 +6,8 @@
 1. 设定查找边界：left（左下标）、right（右下标）
 2. 计算中间下标：m = (left + right) / 2
 3. 比较 `arr[m]` 和目标值：
-   - \boldsymbol{arr[m] <} 目标：目标在右侧，更新 `left = m + 1`
-   - \boldsymbol{arr[m] >} 目标：目标在左侧，更新 `right = m - 1`
+   - $\boldsymbol{arr[m] <}$ 目标：目标在右侧，更新 `left = m + 1`
+   - $\boldsymbol{arr[m] >}$ 目标：目标在左侧，更新 `right = m - 1`
    - 相等：查找成功
 4. 内层循环 `while(left <= right)` 完成单次查找
 5. 外层 `while(1)` 循环持续接收输入，输入0终止程序
