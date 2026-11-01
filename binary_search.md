@@ -3,11 +3,11 @@
 对预先定义好的**升序有序数组**执行二分查找；持续接收用户输入，输入数字 `0` 时退出程序。
 
 ## 实现思路
-1. 设定查找边界：$left$（左下标）、$right$（右下标）
-2. 计算中间下标：$m = (left + right) / 2$
+1. 设定查找边界：left（左下标）、right（右下标）
+2. 计算中间下标：m = (left + right) / 2
 3. 比较 `arr[m]` 和目标值：
-   - $\boldsymbol{arr[m] <}$ 目标：目标在右侧，更新 `left = m + 1`
-   - $\boldsymbol{arr[m] >}$ 目标：目标在左侧，更新 `right = m - 1`
+   - \boldsymbol{arr[m] <} 目标：目标在右侧，更新 `left = m + 1`
+   - \boldsymbol{arr[m] >} 目标：目标在左侧，更新 `right = m - 1`
    - 相等：查找成功
 4. 内层循环 `while(left <= right)` 完成单次查找
 5. 外层 `while(1)` 循环持续接收输入，输入0终止程序
