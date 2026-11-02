@@ -10,7 +10,7 @@ int main()
 	//printf("%d\n",len);len为24，连 \0 也 算进去了，第一次arr2的\0 与arr1的\0替换看不见效果 
 	//所以应该是 right 因该是 len-2 ;或者改用strlen不会算上\0 :strlen(arr1)
 	int left=0,right=len-2;
-	while(left<=right)
+	while(left<=right)//left=right，元素个数为奇数
 	{
 		arr1[left]=arr2[left];
 		arr1[right]=arr2[right];
