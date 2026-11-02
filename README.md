@@ -5,8 +5,9 @@ C语言随堂练习代码仓库，持续更新，用于学习与复盘。
 - [binary_search/](binary_search/)
   - [binary_search.cpp](binary_search/binary_search.cpp): 有序数组二分查找，输入0退出程序
   - [binary_search.md](binary_search/binary_search.md): 二分代码踩坑记录、细节说明
-- [Dynamic changes of characters](Dynamic changes of characters): 字符动态变化练习
-  - [Dynamic changes of character.cpp](Dynamic changes of characters/Dynamic changes of character.cpp)
+- [Dynamic changes of characters](Dynamic%20changes%20of%20characters)
+  - [Dynamic changes of character.cpp](Dynamic%20changes%20of%20characters/Dynamic%20changes%20of%20character.cpp): 字符动态变化练习
+
 
 
 
