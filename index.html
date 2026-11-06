@@ -7,29 +7,27 @@
 <style>
 * {margin:0;padding:0;box-sizing:border-box;}
 body {
-  /* 背景图，换成你图片的链接 */
   background: url("1.Webp") center/cover no-repeat fixed;
   min-height: 100vh;
   padding: 30px 16px;
 }
-/* 毛玻璃容器，包裹你的全部文字和目录 */
 .glass-card {
   max-width: 900px;
   margin: 0 auto;
   padding: 32px;
   border-radius: 16px;
-  /* 核心毛玻璃 */
   background: rgba(255,255,255,0.22);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(2px); /*兼容苹果手机Safari*/
+  -webkit-backdrop-filter: blur(2px);
   border: 1px solid rgba(255,255,255,0.35);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
 }
 h1, h2 {color:#1f4e96;margin-bottom:16px;}
-ul {padding-left:24px;line-height: 2;list-style: disc;}
+p {margin-bottom:16px;font-size:18px;}
+ul {padding-left:24px;line-height:2;list-style: disc;}
 ul ul {list-style: circle;}
 a {color:#005fc5;text-decoration:none;}
-.load-tip {color:#1f4e96;margin-top:10px;}
+a:hover {text-decoration:underline;}
 </style>
 </head>
 <body>
@@ -38,58 +36,30 @@ a {color:#005fc5;text-decoration:none;}
   <h2>My C Language Learning Journey</h2>
   <p>C语言随堂练习代码仓库，持续更新，用于学习与复盘。</p>
   <h2>目录</h2>
-  <div id="catalog">
-    <div class="load-tip">加载目录中...</div>
-  </div>
+  <ul>
+    <li><a href="binary_search/">binary_search/</a>
+      <ul>
+        <li><a href="binary_search/binary_search.cpp">binary_search.cpp</a></li>
+        <li><a href="binary_search/guess number.cpp">guess number.cpp</a></li>
+        <li><a href="binary_search/binary_search.md">binary_search.md</a></li>
+      </ul>
+    </li>
+    <li><a href="Dynamic changes of characters/">Dynamic changes of characters</a>
+      <ul>
+        <li><a href="Dynamic changes of characters/Dynamic changes of character.cpp">Dynamic changes of character.cpp</a></li>
+      </ul>
+    </li>
+    <li><a href="loging_simulation/">loging_simulation</a>
+      <ul>
+        <li><a href="loging_simulation/loging_simulation.cpp">loging_simulation.cpp</a></li>
+      </ul>
+    </li>
+    <li><a href="Recursion/">Recursion/</a>
+      <ul>
+        <li><a href="Recursion/RecursivePrint.cpp">RecursivePrint.cpp</a></li>
+      </ul>
+    </li>
+  </ul>
 </div>
-
-<script>
-// ========== 已经填好你的仓库信息 ==========
-const USER = "HUGH-ALI";
-const REPO = "C-Learning";
-const BRANCH = "main";
-// ============================================
-
-// ✅ 改用 jsdelivr，解决跨域CORS问题
-const readmeUrl = `https://cdn.jsdelivr.net/gh/${USER}/${REPO}@${BRANCH}/README.md?t=${Date.now()}`;
-
-fetch(readmeUrl)
-.then(res => res.text())
-.then(mdText => {
-  const catalogMatch = mdText.match(/## 目录\s*\n([\s\S]*?)(\n##|$)/);
-  if(!catalogMatch){
-    document.getElementById("catalog").innerHTML = "<p>读取目录失败，请检查README格式（必须是 ## 目录）</p>";
-    return;
-  }
-  const listText = catalogMatch[1];
-  let html = "";
-  const lines = listText.split("\n");
-
-  for(const line of lines){
-    const trimLine = line.trim();
-    if(!trimLine) continue;
-    // 二级文件
-    if(line.startsWith("  - ")){
-      const name = trimLine.slice(2).trim();
-      html += `<li><a href="${name}">${name}</a></li>`;
-    }
-    // 一级文件夹
-    else if(trimLine.startsWith("- ")){
-      // 新开文件夹前，关闭上一个文件夹的ul
-      html += `</ul></li>`;
-      const folderName = trimLine.slice(2).trim();
-      html += `<li>${folderName}<ul>`;
-    }
-  }
-  html += `</ul></li>`;
-  // 切掉开头多余的闭合标签
-  html = html.replace("</ul></li>","");
-  document.getElementById("catalog").innerHTML = `<ul>${html}</ul>`;
-})
-.catch(err => {
-  console.error(err);
-  document.getElementById("catalog").innerHTML = "<p>目录加载失败，请检查README格式或网络</p>";
-})
-</script>
 </body>
 </html>
