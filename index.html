@@ -20,8 +20,8 @@ body {
   border-radius: 16px;
   /* 核心毛玻璃 */
   background: rgba(255,255,255,0.22);
-  backdrop-filter: blur(2px);/*胡的程度xpx*/
-  -webkit-backdrop-filter: blur(12px); /*兼容苹果手机Safari*/
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(2px); /*兼容苹果手机Safari*/
   border: 1px solid rgba(255,255,255,0.35);
   box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
@@ -50,7 +50,8 @@ const REPO = "C-Learning";
 const BRANCH = "main";
 // ============================================
 
-const readmeUrl = `https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/README.md?t=${Date.now()}`;
+// ✅ 改用 jsdelivr，解决跨域CORS问题
+const readmeUrl = `https://cdn.jsdelivr.net/gh/${USER}/${REPO}@${BRANCH}/README.md?t=${Date.now()}`;
 
 fetch(readmeUrl)
 .then(res => res.text())
@@ -87,7 +88,7 @@ fetch(readmeUrl)
 })
 .catch(err => {
   console.error(err);
-  document.getElementById("catalog").innerHTML = "<p>目录加载失败，raw访问受限或者网络问题</p>";
+  document.getElementById("catalog").innerHTML = "<p>目录加载失败，请检查README格式或网络</p>";
 })
 </script>
 </body>
