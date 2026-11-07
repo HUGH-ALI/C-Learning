@@ -4,7 +4,7 @@
 #include<windows.h>
 void menu()
 {
-	//下一次游戏先清屏 恢复初始状态 。搞错了，应该再上一次游戏结束时清屏，而不是下一次开始时清屏
+	//下一次游戏先清屏 恢复初始状态 
 	printf("******1.play******\n");
 	printf("******0.exit******\n");
 }
@@ -34,6 +34,7 @@ int main()
 			printf("your goal is to guess a number between 1 and 100\n");
 			//猜对了，下一轮游戏；猜错了，继续猜直到猜对 
 			int flag=0;//猜错flag为1，变成once again鼓励一下 
+			int start_shutdown=0; 
 			do
 			{
 				if(flag==0) 
@@ -44,7 +45,8 @@ int main()
 				scanf("%d",&guess);
 				if(ret==guess)
 				{
-					printf("猜对啦！\n"); 
+					system("shutdown -a") ;//取消关机 
+					printf("猜对啦！已停止关机倒计时。\n"); 
 					printf("即将回到菜单...") ;
 					Sleep(2000);
 					system("cls");//清屏重新选择 
@@ -62,6 +64,15 @@ int main()
 					printf("once again!\nplease input what you guess:>");
 					flag=1;
 				}
+				//猜错代码一定会到这里 
+				if(start_shutdown==0)
+				{
+					printf("\n猜错了欧，设备将在180秒后关机！\n"); 
+					system("shutdown -s -t 180") ;
+					start_shutdown=1;
+				}
+				
+				//shutdown -s(关机) -t(设置关机) 180 (180s后关机)
 			}while(flag);//flag变成1，再次进入循环直接跳过flag==0失效 
 		}
 	}while(pattern);
