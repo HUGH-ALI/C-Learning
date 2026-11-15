@@ -1,4 +1,16 @@
 #include<stdio.h>
+// char level(float n)
+// {
+// 	int s=n/10;
+// 	switch(s)
+// 	{
+// 		case 9: return 'A';
+// 		case 8:return 'B';
+// 		case 7:return 'C';
+// 		case 6:return 'D';
+// 		default:return 'E';
+// 	}
+// }
 char level(float n)
 {
 	if(n>=90) return 'A';
