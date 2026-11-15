@@ -16,7 +16,6 @@
 //		printf("%c",ch[j]+4);
 //		j++;
 //	}
-//	//printf("%d",;
 //	return 0;
 //}
 
