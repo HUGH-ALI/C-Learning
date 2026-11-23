@@ -222,4 +222,8 @@ ebp是边界，esp是“用到哪算哪”。
 ebp寄存器只有一个，只是把它的值改成了当前esp的位置。
  
  
+压返回地址是call指令自带的，和后面test里面  push ebp / mov ebp,esp  是两码事。
  
+mov ebp,esp  是进入test之后才执行的，不是call的时候。call阶段只压返回地址，esp已经变小。
+ 
+test的参数也是和返回地址放在一个地方
