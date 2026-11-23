@@ -227,3 +227,90 @@ ebp寄存器只有一个，只是把它的值改成了当前esp的位置。
 mov ebp,esp  是进入test之后才执行的，不是call的时候。call阶段只压返回地址，esp已经变小。
  
 test的参数也是和返回地址放在一个地方
+
+
+
+test栈帧销毁流程（和创建一一对应）
+ 
+前提：test里面业务代码（b、c赋值这些）已经全部跑完，准备回收栈帧
+栈布局回顾（高→低）
+ 
+plaintext  
+实参
+返回地址
+保存的main的ebp ← test的ebp（起点）
+b=10
+c=20
+esp
+ 
+ 
+销毁一共3条汇编：
+ 
+asm  
+mov esp, ebp
+pop ebp
+ret
+ 
+ 
+① mov esp, ebp
+ 
+esp直接拉回到test的ebp位置。
+ 
+- 作用：把b、c这些局部变量的空间直接宣告回收
+- ⚠️ 重点：不会擦掉内存里b、c的数据，只是esp标记不再管理这块空间，数据变成残留垃圾
+此时栈上：
+ 
+plaintext  
+实参
+返回地址
+保存的main的ebp ← esp现在对准这里
+b=10（残留）
+c=20（残留）
+ 
+ 
+② pop ebp
+ 
+把esp指向的值（保存好的main的ebp）拿出来，放回ebp寄存器
+ 
+- ebp变回main的地基！
+- pop操作自带：esp自动往上挪一格（地址变大）
+挪完之后，esp正好对准【返回地址】
+ 
+plaintext  
+实参
+返回地址 ← esp现在对准这里
+保存的main的ebp（已经被取走）
+ 
+ 
+③ ret
+ 
+ret = 弹出返回地址，跳转到这个地址执行
+ 
+- 取出esp指向的返回地址（纸条），CPU跳转回main
+- ret也会让esp再往上挪一格
+ 
+plaintext  
+实参 ← esp现在对准这里
+返回地址（已经被取走）
+ 
+ 
+✅ 到此：test栈帧彻底销毁，ebp、esp全部恢复到调用test之前的状态。
+ 
+ 
+ 
+【创建 ↔ 销毁 对照速记】
+ 
+创建（进test）
+ 
+1. push ebp 保存上层ebp
+2. mov ebp, esp 定下test地基
+3. esp下移，分配局部变量
+ 
+销毁（出test）
+ 
+1. mov esp, ebp 收回局部变量空间
+2. pop ebp 恢复上层ebp
+3. ret 跳回上层函数
+ 
+额外小知识点：
+上面实参还留在栈上！如果是cdecl调用约定，回到main之后，main自己会把参数的空间平衡掉（esp往上抬），清理实参。
