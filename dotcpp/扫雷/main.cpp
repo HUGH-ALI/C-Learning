@@ -18,8 +18,6 @@ int main()
 					inidanger(mine,ROW,COL);//布置雷 
 					printf("--------扫雷--------\n");
 					board_show(arr,ROW,COL);
-					//printf("\n");
-					//board_show(mine,ROW,COL);测试 
 					printf("--------扫雷--------\n");
 					printf("\n");
 					
@@ -28,13 +26,53 @@ int main()
 					{
 						int x;
 						int y;
-
-						printf("玩家输入要排雷的坐标：");
+						printf("玩家输入坐标(负数为标记，例 -2 -3；正数翻开):");
 						scanf("%d %d",&x,&y);
 						
+						//标记逻辑：输入负数
+						if(x < 0 && y < 0)
+						{
+							int rx = -x;
+							int ry = -y;
+							if(rx<=0 || ry<=0 || rx>ROW || ry>COL) 
+							{
+								printf("超出范围，请重新输入!\n");
+								continue;
+							}
+							//已经翻开数字，不能标记
+							if(arr[rx][ry] >= '0' && arr[rx][ry] <= '8')
+							{
+								printf("已经翻开的格子不能标记！\n");
+								continue;
+							}
+							if(arr[rx][ry] == '*')
+							{
+								arr[rx][ry] = 'F';//插旗子
+							}
+							else if(arr[rx][ry] == 'F')
+							{
+								arr[rx][ry] = '*';//取消旗子
+							}
+							board_show(arr,ROW,COL);
+							//判断胜利
+							if(win(arr,mine,ROW,COL)==1)
+							{
+								printf("恭喜你已经排除所有雷！\n");
+								flag=0;
+							}
+							continue;
+						}
+
+						//翻开逻辑（正数）
 						if(x<=0 || y<=0 || x>ROW || y>COL) 
 						{
 							printf("超出范围，请重新排除!\n");
+							continue;
+						}
+						//旗子不能翻开
+						if(arr[x][y] == 'F')
+						{
+							printf("该位置已经插旗，不能翻开！\n");
 							continue;
 						}
 						
@@ -46,30 +84,13 @@ int main()
 						}
 						else
 						{
-//							arr[x][y]=count(mine,x,y);
-//							int ret=count(mine,x,y)-'0';
-//							if(ret==0)
-//							{
-//								for(int i=x-1;i<=x+1;i++)
-//								{
-//									for(int j=y-1;j<=y+1;j++)
-//									{
-//										if(arr[i][j]!='*')
-//										continue;
-//										else
-//										arr[i][j]='0';
-//									}
-//								}
-//							}
-//不继续递归检查其他八个坐标那么输入上个坐标周围八个坐标是已经检查出来的信息会被覆盖 
 							open(mine,arr,x,y);
-							//board_show(mine,ROW,COL);测试 
 							printf("\n");
 							board_show(arr,ROW,COL);
 							
-							if(win(arr,ROW,COL)==10)
+							if(win(arr,mine,ROW,COL)==1)
 							{
-								printf("恭喜你已经排除所有雷！");
+								printf("恭喜你已经排除所有雷！\n");
 								flag=0;
 								break;
 							}
@@ -88,5 +109,4 @@ int main()
 	}while(op);
 	return 0;
 }
-
 

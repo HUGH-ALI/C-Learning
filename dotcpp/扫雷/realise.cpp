@@ -7,7 +7,6 @@ void menu()
 	printf("****************\n");
 	printf("玩家请选择:>");
 }
-
 void iniboard(char mine[ROWS][COLS],int row,int col)
 {
 	for(int i=1;i<=row;i++)
@@ -18,8 +17,6 @@ void iniboard(char mine[ROWS][COLS],int row,int col)
 		}
 	}
 }
-
-
 void blind_board(char arr[ROWS][COLS],int row,int col)
 {
 	for(int i=1;i<=row;i++)
@@ -30,8 +27,6 @@ void blind_board(char arr[ROWS][COLS],int row,int col)
 		}
 	}
 }
-
-
 void board_show(char arr[ROWS][COLS],int row,int col)
 {
 	int i=0;
@@ -50,23 +45,10 @@ void board_show(char arr[ROWS][COLS],int row,int col)
 		printf("\n");
 	}
 }
-
-
-
 void inidanger(char mine[ROWS][COLS],int row,int col)
 {
-//	int i=0;
-//	for(i=1;i<row*col;i++)
-//	{
-//		int x=rand()%row+1;
-//		int y=rand()%col+1;
-//		if(mine[x][y]=='1')
-//		continue;//continue不会跳过i++导致雷不足80 
-//		else
-//		mine[x][y]='1';
-//	}
 	int cont=0;
-	while(cont<10)//总共80个雷cont=79, 满足 < 80 → 放雷，cont 变成 80
+	while(cont<10)
 	{
 		int x=rand()%row+1;
 		int y=rand()%col+1;
@@ -78,7 +60,6 @@ void inidanger(char mine[ROWS][COLS],int row,int col)
 		else continue;
 	}
 }
-
 //11*11 判断周围雷数 
 char count(char mine[ROWS][COLS],int x,int y)
 {
@@ -96,24 +77,28 @@ char count(char mine[ROWS][COLS],int x,int y)
 	return c;
 }
 
-int win(char arr[ROWS][COLS],int row,int col)
+//全部非雷格子已经翻开返回1，代表胜利
+int win(char arr[ROWS][COLS],char mine[ROWS][COLS],int row,int col)
 {
-	int cont=0;
 	for(int i=1;i<=row;i++)
 	{
 		for(int j=1;j<=col;j++)
 		{
-			if(arr[i][j]=='*')
-			cont++;
+			//不是雷，但是还是*，没有翻开，没胜利
+			if(mine[i][j] == '0' && arr[i][j] == '*')
+			{
+				return 0;
+			}
 		}
 	}
-	return cont;
+	return 1;
 }
 
 void open(char mine[ROWS][COLS], char arr[ROWS][COLS], int x, int y)
 {
+	//不是*（数字或者F旗子）直接返回，不翻开
 	if(arr[x][y]!='*')
-	return;
+		return;
 	arr[x][y]=count(mine,x,y);
 	if(arr[x][y]=='0')
 	{
@@ -127,3 +112,4 @@ void open(char mine[ROWS][COLS], char arr[ROWS][COLS], int x, int y)
         open(mine,arr,x+1,y+1);
 	}
 }
+
